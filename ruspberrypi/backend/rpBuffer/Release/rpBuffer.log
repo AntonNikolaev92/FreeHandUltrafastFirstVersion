@@ -1,0 +1,16 @@
+﻿  VisualGDB: Sending 1 updated source file to build machine...
+  VisualGDB: Run "make  CONFIG=Release" in directory "/tmp/VisualGDB/e/projects/FreehandUltrafast/rpBufferv0_2/rpBuffer" on root@10.47.9.243 (SSH)
+  g++ -ggdb -ffunction-sections -O3   -DNDEBUG=1 -DRELEASE=1  -c rpBuffer.cpp -o Release/rpBuffer.o -MD -MF Release/rpBuffer.dep
+  g++ -o Release/rpBuffer -Wl,-gc-sections    -Wl,--start-group Release/hid.o Release/rpBuffer.o -lwiringPi -ludev  -Wl,--rpath='$ORIGIN'   -Wl,--end-group
+  /usr/bin/ld: Release/rpBuffer.o(0): error : undefined reference to symbol 'pthread_join@@GLIBC_2.4'
+  //lib/arm-linux-gnueabihf/libpthread.so.0: error adding symbols: DSO missing from command line
+collect2 : error : ld returned 1 exit status
+  Makefile:138: recipe for target 'Release/rpBuffer' failed
+  make: *** [Release/rpBuffer] Error 1
+  -------------------------------------------------------------
+  Command exited with code 2
+  Executable: make
+  Arguments:  CONFIG=Release
+  Directory: /tmp/VisualGDB/e/projects/FreehandUltrafast/rpBufferv0_2/rpBuffer
+VisualGDB : error : Command-line action failed
+D:\VisualStudio\Common7\IDE\VC\VCTargets\Microsoft.MakeFile.Targets(44,5): error MSB3073: The command ""C:\Program Files (x86)\Sysprogs\VisualGDB\\VisualGDB.exe" /build "E:\projects\FreehandUltrafast\rpBufferv0_2\rpBuffer\rpBuffer.vcxproj" "/solution:E:\projects\FreehandUltrafast\rpBufferv0_2\rpBuffer.sln"  "/config:Release" "/platform:Win32"" exited with code 1.
