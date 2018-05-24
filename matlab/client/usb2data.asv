@@ -1,0 +1,48 @@
+nStartByte = 5;
+posBuf = rcvBuf(nStartByte: (nFrames*szUSB+nStartByte));
+nStartbyte = nStartByte+nFrames*szUSB+1;
+posHex = dec2hex(typecast(posBuf,'uint8'));
+tsBuf = rcvBuf(nStartByte:(length(rcvBuf)));
+
+[ t, q ] = usbdata2pos(posBuf, szUSB);
+ts = typecast(tsBuf,'uint8');
+
+fhData.pos.ts = typecast(tsBuf,'int32');
+[ fhData.pos.t, fhData.pos.q ] = usbdata2pos( typecast(posBuf,'uint8'), 64 );
+
+% Interpolate Coordinates with respect to acquisition frames
+tmpt = t;
+tmpq = q;
+tmpts = ts;
+indexes = [];
+for iFrame = 1:nFrames
+    if ( t(1,iFrame) < -1e+4 ) || ( t(1,iFrame ) > 1e+4 )||...
+          ( t(2,iFrame) < -1e+4 ) || ( t(2,iFrame ) > 1e+4 )|| ...
+          ( t(3,iFrame) < -1e+4 ) || ( t(3,iFrame ) > 1e+4 )|| ...
+          ( t(1,iFrame) < -1e+4 ) || ( t(1,iFrame ) > 1e+4 )|| ...
+          ( t(2,iFrame) < -1e+4 ) || ( t(2,iFrame ) > 1e+4 )|| ...
+          ( t(3,iFrame) < -1e+4 ) || ( t(3,iFrame ) > 1e+4 )|| ...
+          ( t(iFrame) < -1e+4 ) || ( t(iFrame ) > 1e+4 ) 
+      indexes = indexes;
+    else
+        indexes = [indexes, iFrame];
+    end
+end
+t
+t(1,:) = t(1,indexes);
+t(2,:) = t(2,indexes);
+t(3,:) = t(3,indexes);
+q(1,:) = q(1,indexes);
+q(2,:) = q(2,indexes);
+q(3,:) = q(3,indexes);
+ts = ts(indexes);
+
+
+
+subplot(3,3,1); plot(t(1,:)); ylabel('tx');
+subplot(3,3,2); plot(t(2,:)); ylabel('ty');
+subplot(3,3,3); plot(t(3,:)); ylabel('tz');
+subplot(3,3,4); plot(q(1,:)); ylabel('qx');
+subplot(3,3,5); plot(q(2,:)); ylabel('qy');
+subplot(3,3,6); plot(q(3,:)); ylabel('qz');
+subplot(3,3,7); plot(ts);

@@ -171,7 +171,7 @@ int run()
 		ptrBufSend += (frameCur - frameStart)*szUSB*sizeof(unsigned char);
 		memcpy( bufSend + nFramesToSend*szUSB, // time stamps
 			bufRcvTs  + frameStart,
-			(frameCur - frameStart)*szUSB*sizeof(long) );
+			(frameCur - frameStart)*sizeof(long) );
 	}
 	else{
 		nFramesToSend = (nFRAMES_MAX + frameCur - frameStart);
@@ -205,7 +205,7 @@ int run()
 	int res = select(server + 1, &waiting_set, NULL, NULL, &timeout);
 	if (res == 1) {
 		int client = accept(server, NULL, NULL);
-		transferAll( client, bufSend, nFramesToSend*(szUSB*sizeof(unsigned char) + sizeof(long)) );
+		transferAll( client, bufSend, nFramesToSend*(szUSB*sizeof(unsigned char) + sizeof(long) ) + sizeof(int) );
 		printf(" Frames transfered: %i (%i bites)", nFramesToSend, nFramesToSend*(szUSB*sizeof(unsigned char) + sizeof(long)));
 		close(client);
 	}
@@ -238,9 +238,9 @@ void *acqDataThread(void* args)
 		ts0 = ts1;
 		clock_gettime(CLOCK_MONOTONIC, &ts1);
 		pthread_mutex_lock(&mutex);
-			bufRcvPos[frameCur] = (ts1.tv_nsec - ts0.tv_nsec);
+			bufRcvTs[frameCur] = (ts1.tv_nsec - ts0.tv_nsec);
 			memcpy(bufRcvPos+frameCur*szUSB, bufRcvUSB, szUSB*sizeof(unsigned char));
-			frameCur = frameCur < nFRAMES_MAX ? frameCur : 0;	
+			frameCur = frameCur < nFRAMES_MAX ? frameCur + 1 : 0;	
 		pthread_mutex_unlock(&mutex);
 		
 	}

@@ -8,7 +8,7 @@
 #define LED     11
 #define TRIGIN  9
 #define TRIGOUT 13
-#define DELAY   2*1e+3 // 5 sec
+#define DELAY   5*1e+3 // 5 sec
 #define PWIDTH  200 //0.2 sec
 
 static bool status;

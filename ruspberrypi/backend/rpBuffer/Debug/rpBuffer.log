@@ -1,3 +1,4 @@
-﻿  VisualGDB: No file changes detected. If you believe it's a mistake, please clean the project and build it again.
-  VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/e/projects/FreehandUltrafast/rpBufferv0_2/rpBuffer" on root@10.47.9.243 (SSH)
-  make: Nothing to be done for 'all'.
+﻿  VisualGDB: Sending 1 updated source file to build machine...
+  VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/g/projects/FreeHandUltrafast/ruspberrypi/backend/rpBuffer" on root@10.47.9.240 (SSH)
+  g++ -ggdb -ffunction-sections -O0   -DDEBUG=1  -c rpBuffer.cpp -o Debug/rpBuffer.o -MD -MF Debug/rpBuffer.dep
+  g++ -o Debug/rpBuffer -Wl,-gc-sections    -Wl,--start-group Debug/hid.o Debug/rpBuffer.o -lwiringPi -ludev -lpthread  -Wl,--rpath='$ORIGIN'   -Wl,--end-group
