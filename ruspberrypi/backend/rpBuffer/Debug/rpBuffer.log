@@ -1,4 +1,6 @@
-﻿  VisualGDB: Sending 1 updated source file to build machine...
-  VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/g/projects/FreeHandUltrafast/ruspberrypi/backend/rpBuffer" on root@10.47.9.240 (SSH)
+﻿  VisualGDB: Sending 8 updated source files to build machine...
+  VisualGDB: Run "make  CONFIG=Debug" in directory "/tmp/VisualGDB/e/projects/FreeHandUltrafast/ruspberrypi/backend/rpBuffer" on root@10.47.9.240 (SSH)
+  mkdir Debug
+  gcc -ggdb -ffunction-sections -O0   -DDEBUG=1  -c hid.c -o Debug/hid.o -MD -MF Debug/hid.dep
   g++ -ggdb -ffunction-sections -O0   -DDEBUG=1  -c rpBuffer.cpp -o Debug/rpBuffer.o -MD -MF Debug/rpBuffer.dep
   g++ -o Debug/rpBuffer -Wl,-gc-sections    -Wl,--start-group Debug/hid.o Debug/rpBuffer.o -lwiringPi -ludev -lpthread  -Wl,--rpath='$ORIGIN'   -Wl,--end-group

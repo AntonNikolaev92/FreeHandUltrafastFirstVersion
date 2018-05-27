@@ -3,10 +3,11 @@
 close all
 clear all
 
-addpath(genpath('G:\libs\matlab'));
+addpath(genpath('E:\libs\matlab'));
 
 port = 5555;
-ipaddr = '10.47.9.240';
+%ipaddr = '10.47.9.240';
+ipaddr = '192.168.0.101';
 szUSB = 64;
 jTcpObj = [];
 
@@ -40,13 +41,18 @@ nStartByte = nStartByte+nFrames*szUSB;
 posHex = dec2hex(typecast(posBuf,'uint8'));
 tsBuf = rcvBuf(nStartByte:(length(rcvBuf)));
 
-[ t, q ] = usbdata2pos(posBuf, szUSB);
-ts = typecast(tsBuf,'int32');
+[ t, q ] = usbdata2pos(typecast(posBuf, 'uint8'), szUSB);
+dt = typecast(tsBuf,'int32');
+
+% make a time stamp
+ts  = zeros(1,nFrames);
+for iFrame = 2:nFrames
+    ts(iFrame) = ts(iFrame-1)+double(dt(iFrame))*1e-9;
+end
 
 % Interpolate Coordinates with respect to acquisition frames
 indexes = [];
-indexes = 1:nFrames;
-%{
+
 for iFrame = 1:nFrames
     if ( t(1,iFrame) < -1e+4 ) || ( t(1,iFrame ) > 1e+4 )||...
           ( t(2,iFrame) < -1e+4 ) || ( t(2,iFrame ) > 1e+4 )|| ...
@@ -59,7 +65,7 @@ for iFrame = 1:nFrames
         indexes = [indexes, iFrame];
     end
 end
-%}
+
 tmpt = t;
 tmpq = q;
 tmpts = ts;
@@ -75,11 +81,11 @@ q(3,:) = tmpq(3,indexes);
 q(4,:) = tmpq(4,indexes);
 ts = tmpts(indexes);
 
+subplot(3,3,1); plot(ts, t(1,:)); ylabel('tx'); grid on;
+subplot(3,3,2); plot(ts, t(2,:)); ylabel('ty'); grid on;
+subplot(3,3,3); plot(ts, t(3,:)); ylabel('tz'); grid on;
+subplot(3,3,4); plot(ts, q(1,:)); ylabel('qx'); grid on;
+subplot(3,3,5); plot(ts, q(2,:)); ylabel('qy'); grid on;
+subplot(3,3,6); plot(ts, q(3,:)); ylabel('qz'); grid on;
+subplot(3,3,7); plot(ts); grid on;
 
-subplot(3,3,1); plot(t(1,:)); ylabel('tx'); grid on;
-subplot(3,3,2); plot(t(2,:)); ylabel('ty'); grid on;
-subplot(3,3,3); plot(t(3,:)); ylabel('tz'); grid on;
-subplot(3,3,4); plot(q(1,:)); ylabel('qx'); grid on;
-subplot(3,3,5); plot(q(2,:)); ylabel('qy'); grid on;
-subplot(3,3,6); plot(q(3,:)); ylabel('qz'); grid on;
-subplot(3,3,7); plot(ts);

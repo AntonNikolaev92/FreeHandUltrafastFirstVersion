@@ -31,7 +31,6 @@ function [ decNumber] = amfiData2Dec(values)
     if lenData~=3, decNumber = 0; return; end;
     % Format Number
     decNumber = double(values(3))*16.^4 + double(values(2))*16.^2 + double(values(1));
-    
     numTh = pow2(23) - 1 ;
     numMax = pow2(24) - 1;
     

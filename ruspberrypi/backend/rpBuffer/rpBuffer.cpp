@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 #include <sys/select.h>
 #include <pthread.h>
+#include <limits.h>
 
 #include "hidapi.h"
 
@@ -169,7 +170,7 @@ int run()
 			bufRcvPos + frameStart*szUSB,
 			(frameCur - frameStart)*szUSB*sizeof(unsigned char) );
 		ptrBufSend += (frameCur - frameStart)*szUSB*sizeof(unsigned char);
-		memcpy( bufSend + nFramesToSend*szUSB, // time stamps
+		memcpy( ptrBufSend, // time stamps
 			bufRcvTs  + frameStart,
 			(frameCur - frameStart)*sizeof(long) );
 	}
@@ -238,7 +239,8 @@ void *acqDataThread(void* args)
 		ts0 = ts1;
 		clock_gettime(CLOCK_MONOTONIC, &ts1);
 		pthread_mutex_lock(&mutex);
-			bufRcvTs[frameCur] = (ts1.tv_nsec - ts0.tv_nsec);
+			if (ts1.tv_nsec > ts0.tv_nsec) bufRcvTs[frameCur] = (ts1.tv_nsec - ts0.tv_nsec);
+			else bufRcvTs[frameCur] = (1e+9 + ts1.tv_nsec - ts0.tv_nsec);
 			memcpy(bufRcvPos+frameCur*szUSB, bufRcvUSB, szUSB*sizeof(unsigned char));
 			frameCur = frameCur < nFRAMES_MAX ? frameCur + 1 : 0;	
 		pthread_mutex_unlock(&mutex);
