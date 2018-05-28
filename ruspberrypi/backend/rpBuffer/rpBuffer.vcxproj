@@ -44,7 +44,6 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0000\include\c++\6;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0000\include\arm-linux-gnueabihf\c++\6;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0000\include\c++\6\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0001\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0003\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0002\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0000\include\arm-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.243\0000\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakeForcedIncludes>$(ProjectDir)\gcc_Debug.h;$(VISUALGDB_DIR)\gcc_compat.h;$(NMakeForcedIncludes)</NMakeForcedIncludes>
     <NMakeBuildCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /build "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeBuildCommandLine>
     <NMakeCleanCommandLine>"$(VISUALGDB_DIR)\VisualGDB.exe" /clean "$(ProjectPath)" "/solution:$(SolutionPath)"  "/config:$(Configuration)" "/platform:$(Platform)"</NMakeCleanCommandLine>
@@ -53,6 +52,7 @@
     <IncludePath />
     <ReferencePath />
     <LibraryPath />
+    <NMakeIncludeSearchPath>$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0000\include\c++\6;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0000\include\arm-linux-gnueabihf\c++\6;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0000\include\c++\6\backward;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0001\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0003\include;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0002\include-fixed;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0000\include\arm-linux-gnueabihf;$(LOCALAPPDATA)\VisualGDB\RemoteSourceCache\10.47.9.240\0000\include;$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
     <NMakePreprocessorDefinitions>__VisualGDB_CFG_Debug;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

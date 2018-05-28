@@ -21,10 +21,9 @@ using namespace std;
 #define hidPID		0xd12
 
 /* Ruspberry pi GPIO */
-#define gpioERR     3 // 15   
 #define gpioIND		2 // 13
-#define gpioVER		1 // 12
-#define gpioBTN		0 // 11
+#define gpioACQSTOP		1 // 12
+#define gpioACQSTART	0 // 11
 
 #define szUSB		64 //bytes
 #define nFRAMES_MAX		1000*szUSB
@@ -94,10 +93,12 @@ int initialise()
 		
 	// RusberryPi GPIO
 	wiringPiSetup();
-	pinMode(gpioBTN, INPUT);
-	pinMode(gpioVER, INPUT);
+	pinMode(gpioACQSTART, INPUT);
+	pinMode(gpioACQSTOP, INPUT);
 	pinMode(gpioIND, OUTPUT);
 	digitalWrite(gpioIND, LOW);
+	digitalWrite(gpioACQSTART, LOW);
+	digitalWrite(gpioACQSTOP, LOW);
 
 	// Memory
 	bufRcvUSB = (unsigned char*)malloc(szUSB*sizeof(unsigned char));
@@ -149,7 +150,7 @@ int initialise()
 int run()
 {
 	// wait for the input triggering event
-	while(!digitalRead(gpioBTN));
+	while(!digitalRead(gpioACQSTART));
 	pthread_mutex_lock(&mutex);
 	frameStart = frameCur;
 	pthread_mutex_unlock(&mutex);
@@ -158,7 +159,7 @@ int run()
 	// wait for stop trigger input trigger
 	int nFramesToSend = 0;
 	unsigned char *ptrBufSend = bufSend;
-	while (!digitalRead(gpioVER)) ;
+	while (!digitalRead(gpioACQSTOP)) ;
 	pthread_mutex_lock(&mutex);
 
 	if (frameCur > frameStart){

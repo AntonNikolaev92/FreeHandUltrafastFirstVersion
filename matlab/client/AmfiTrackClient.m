@@ -3,11 +3,11 @@
 close all
 clear all
 
-addpath(genpath('E:\libs\matlab'));
+addpath(genpath('G:\libs\matlab'));
 
 port = 5555;
-%ipaddr = '10.47.9.240';
-ipaddr = '192.168.0.101';
+ipaddr = '10.47.9.240';
+%ipaddr = '192.168.0.101';
 szUSB = 64;
 jTcpObj = [];
 
